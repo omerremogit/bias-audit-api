@@ -2,7 +2,7 @@ from fastapi import FastAPI, File, UploadFile
 import numpy as np
 import cv2
 import mediapipe as mp
-from app.audit import audit_encoding
+from audit import audit_encoding
 
 app = FastAPI()
 
