@@ -1,12 +1,22 @@
 from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 import cv2
 import mediapipe as mp
-from audit import audit_encoding
+from audit import audit_encoding  # Assuming audit.py is in the same folder
 
 app = FastAPI()
 
+# ✅ Enable CORS for local dev or any frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Replace "*" with your frontend domain in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
+# ⚙️ Extract facial landmarks with Mediapipe
 def extract_face_embedding(image_rgb):
     mp_face_mesh = mp.solutions.face_mesh
     with mp_face_mesh.FaceMesh(static_image_mode=True, refine_landmarks=True) as face_mesh:
